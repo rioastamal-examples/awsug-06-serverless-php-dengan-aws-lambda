@@ -1,0 +1,28 @@
+service: app
+
+provider:
+    name: aws
+    region: ap-southeast-1
+    runtime: provided
+    httpApi:
+      payload: '2.0'
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    terbilang:
+        handler: index.php
+        description: ''
+        layers:
+            - ${bref:layer.php-73}
+        events:
+            - httpApi:
+                  method: '*'
+                  path: '/'
+
+
+# Exclude files from deployment
+package:
+    exclude:
+        - 'tests/**'
