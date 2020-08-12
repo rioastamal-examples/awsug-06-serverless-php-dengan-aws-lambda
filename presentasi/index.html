@@ -64,6 +64,16 @@
 				</div>
 			</section>
 
+            <section>
+                <h3>Materi Presentasi dan Kode Demo</h3>
+                <p>
+                    <ul>
+                        <li><a href="https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/">https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/</a></li>
+                        <li><a href="https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda">https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda</a></li>
+                    </ul>
+            </section>
+
+
 			<section>
 				<h3>Apa yang akan kamu pelajari</h3>
 				<p>
@@ -71,25 +81,38 @@
 					<span style="display: inline-block" class="fragment fade-left red">{Pengenalan AWS Lambda}</span>
 					<span style="display: inline-block; color: yellow" class="fragment fade-up">{Serverless PHP}</span>
 					<span style="display: inline-block" class="fragment fade-right">{Serverless Deployment}</span>
-					<span style="display: inline-block; color: green" class="fragment fade-down">{Demo Create API}</span>
-					<span style="display: inline-block; color: cyan" class="fragment fade-up">{Traditional vs Serverless PHP}</span>
-					<span style="display: inline-block; color: magenta" class="fragment fade-down">{Profiling Lambda Function}</span>
+					<span style="display: inline-block; color: green" class="fragment fade-down">{Serverless Demo}</span>
+					<span style="display: inline-block; color: magenta" class="fragment fade-down">{Profiling Lambda Function}*</span>
 				</p>
 			</section>
 
-			<section data-background="img/dukun-serverless.jpg">
-				<div style="position: absolute; width: 400px; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
-					<div style="position: relative;">
-						<h3 style="text-transform: none;">Apa itu Serverless?</h3>
-					</div>
-				</div>
-			</section>
+            <section>
+    			<section data-background="img/dukun-serverless.jpg">
+    				<div style="position: absolute; width: 400px; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+    					<div style="position: relative;">
+    						<h3 style="text-transform: none;">Apa itu Serverless?</h3>
+    					</div>
+    				</div>
+    			</section>
 
-			<section>
-				<h3>Serverless</h3>
-				<blockquote style="text-align: left; font-size: 34px;">Menjalankan kode aplikasi tanpa perlu memikirkan server (autoscaling dkk).</blockquote>
-				<blockquote style="text-align: left; font-size: 34px;">Bayar hanya jika digunakan (idle = free).</blockquote>
-			</section>
+    			<section>
+    				<h3>Serverless</h3>
+    				<blockquote style="text-align: left; font-size: 34px;">Menjalankan kode aplikasi tanpa perlu memikirkan server (autoscaling dkk).</blockquote>
+    				<blockquote style="text-align: left; font-size: 34px;">Dalam konteks ini adalah Function as a Service (FaaS).</blockquote>
+    			</section>
+
+                <section>
+                    <h3>Keuntungan Serverless</h3>
+                    <p>
+                        <span style="display: inline-block; color: cyan" class="fragment fade-left">{Zero Administration}</span>
+                        <span style="display: inline-block" class="fragment fade-left red">{Bayar per Eksekusi}</span>
+                        <span style="display: inline-block; color: yellow" class="fragment fade-up">{Idle = Gratis}</span>
+                        <span style="display: inline-block" class="fragment fade-right">{Auto-Scaling}</span>
+                        <span style="display: inline-block; color: green" class="fragment fade-down">{Microservice sejak awal}</span>
+                        <span style="display: inline-block; color: magenta" class="fragment fade-up">{Faster time to market}</span>
+                    </p>
+                </section>
+            </section>
 
 			<section>
 				<h3>AWS Lambda</h3>
@@ -175,7 +198,39 @@
 				</section>
 
 				<section>
-
+                    <h3>Serverless Demo App</h3>
+                    <table style="font-size: 32px;">
+                        <thead>
+                            <tr>
+                                <td>App</td>
+                                <td>Tipe</td>
+                                <td>Lambda Layer</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Terbilang</td>
+                                <td>HTTP API</td>
+                                <td>bref php-73</td>
+                            </tr>
+                            <tr>
+                                <td>SQL Query Browser</td>
+                                <td>Normal Web</td>
+                                <td>bref php-73-fpm</td>
+                            </tr>
+                            <tr>
+                                <td>New File Notification*</td>
+                                <td>S3 Event</td>
+                                <td>bref php-73</td>
+                            </tr>
+                            <tr style="text-decoration: line-through solid red;">
+                                <td>What is My IP*</td>
+                                <td>HTTP API + Normal Web</td>
+                                <td>bref php-73</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 30px;">*) Hanya menggunakan Bref PHP Runtime tanpa Bref Framework</p>
 				</section>
 			</section>
 
