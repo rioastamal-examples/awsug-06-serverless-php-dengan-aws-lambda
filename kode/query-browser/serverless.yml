@@ -1,0 +1,26 @@
+service: querybrowser
+
+provider:
+    name: aws
+    region: ap-southeast-1
+    runtime: provided
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    api:
+        handler: index.php
+        description: 'Simple SQL query browser for MySQL'
+        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+        layers:
+            - ${bref:layer.php-73-fpm}
+        events:
+            -   http: 'ANY /'
+            -   http: 'ANY /{proxy+}'
+
+# Exclude files from deployment
+package:
+    exclude:
+        - 'node_modules/**'
+        - 'tests/**'
