@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Serverless PHP dengan AWS Lambda - AWS UG Surabaya 06</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<style>
+		html, body {
+			height: 100%;
+            /*background-color: #262f3d;*/
+		}
+		.reveal section img.no-margin {
+			margin: 0;
+		}
+		.reveal section.no-padding {
+			padding: 0;
+		}
+		.red {
+			color: #c60000;
+		}
+		.reveal h3 {
+			text-transform: none;
+		}
+	</style>
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h3>Serverless PHP <br>dengan AWS Lambda</h3>
+			</section>
+
+			<section data-background="img/camp-2.jpg">
+				<div style="position: absolute; width: 400px; height: 260px; right: 0; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+					<div style="position: relative; text-align: right; padding-right: 10px;">
+						<h3 style="text-transform: none;">Rio Astamal</h3>
+						<div style="font-size: 22px;">
+							<span style="display: block; width: 60px; float: left;">2019</span> <span>Baby sitter</span><br>
+							<span style="display: block; width: 60px; float: left;">2017</span> <span>Lead Backend at ClearView Studios</span><br>
+							<span style="display: block; width: 60px; float: left;">2016</span> <span><a style="color: white" href="https://belajaraws.com/">BelajarAWS.com</a></span><br>
+							<span style="display: block; width: 60px; float: left;">2015</span> <span>Lead Dev at DominoPOS</span><br>
+							<span style="display: block; width: 60px; float: left;">2014</span> <span>System Engineer at WowRack</span>
+							<span style="display: block; width: 60px; float: left;">2004</span> <span>Freelance Web Developer</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h3>Apa yang akan kamu pelajari</h3>
+				<p>
+					<span style="display: inline-block; color: cyan" class="fragment fade-left">{Pengenalan Serverless}</span>
+					<span style="display: inline-block" class="fragment fade-left red">{Pengenalan AWS Lambda}</span>
+					<span style="display: inline-block; color: yellow" class="fragment fade-up">{Serverless PHP}</span>
+					<span style="display: inline-block" class="fragment fade-right">{Serverless Deployment}</span>
+					<span style="display: inline-block; color: green" class="fragment fade-down">{Demo Create API}</span>
+					<span style="display: inline-block; color: cyan" class="fragment fade-up">{Traditional vs Serverless PHP}</span>
+					<span style="display: inline-block; color: magenta" class="fragment fade-down">{Profiling Lambda Function}</span>
+				</p>
+			</section>
+
+			<section data-background="img/dukun-serverless.jpg">
+				<div style="position: absolute; width: 400px; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+					<div style="position: relative;">
+						<h3 style="text-transform: none;">Apa itu Serverless?</h3>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h3>Serverless</h3>
+				<blockquote style="text-align: left; font-size: 34px;">Menjalankan kode aplikasi tanpa perlu memikirkan server (autoscaling dkk).</blockquote>
+				<blockquote style="text-align: left; font-size: 34px;">Bayar hanya jika digunakan (idle = free).</blockquote>
+			</section>
+
+			<section>
+				<h3>AWS Lambda</h3>
+				<blockquote>Layanan Serverless dari AWS yang mendukung penggunaan kode NodeJS, Python, Java, Go, .NET Core, Ruby dan <strong style="text-decoration: underline;">Custom Runtime</strong>.</blockquote>
+
+				<blockquote>Biaya dihitung per 100ms durasi waktu dan &Sigma; eksekusi.</blockquote>
+			</section>
+
+			<section>
+				<section>
+					<h3>Cara Kerja Lambda</h3>
+					<img src="img/lambda-how-it-works.png">
+				</section>
+
+				<section>
+					<h3>Lambda Runtime</h3>
+					<blockquote>Gabungan dari sistem operasi, bahasa pemrograman dan pustaka-pustaka lain yang dibutuhkan untuk menjalankan kode.</blockquote>
+				</section>
+
+				<section>
+					<h3>Contoh Kode Python</h3>
+<pre><code class="hljs" data-trim>def my_handler(event, context):
+    return {
+        "message": "Hello World"
+    }</code></pre>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h3>Bagaimana dengan Runtime PHP di AWS Lambda?</h3>
+					<p>
+						<span style="display: block; color: yellow" class="fragment fade-left">Tidak ada :(</span>
+                        <span style="display: block; color: cyan" class="fragment fade-right">#justkidding</span>
+					</p>
+				</section>
+
+				<section>
+					<h3>Perkenalkan Bref PHP</h3>
+					<blockquote>Bref adalah Runtime PHP, Framework dan deployment tool agar PHP dapat dijalankan di AWS Lambda.</blockquote>
+				</section>
+
+				<section>
+					<h3>Bref PHP Runtime</h3>
+					<p>Dibuat dari <span style="background-color:yellow; border-radius: 6px; padding: 2px 8px; color: black;">amazonlinux:2018.03</span> Docker image</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Layer</th>
+								<th>Cocok untuk</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr style="color: cyan">
+								<td>php-*</td>
+								<td>PHP Function (from scratch)</td>
+							</tr>
+							<tr style="color: yellow">
+								<td>php-*-fpm</td>
+								<td>Website/Framework</td>
+							</tr>
+							<tr style="color: magenta">
+								<td>console</td>
+								<td>Console (CLI)</td>
+							</tr>
+						</tbody>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h3>Konsep Eksekusi Custom Runtime</h3>
+				</section>
+
+				<section data-background-color="white">
+					<img style="box-shadow: none" src="img/lambda-runtime-concept.jpg">
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h3>Saatnya Koding</h3>
+				</section>
+
+				<section>
+
+				</section>
+			</section>
+
+			<section>
+				<h3>./end</h3>
+				<ul style="list-style: none">
+					<li><img src="img/wwwlogo.png" style="background-color: white; border-radius: 4px; margin: 0; height: 40px; margin-right: 10px; position: relative; top: 0.2em;">Website <a href="https://rioastamal.net">rioastamal.net</a></li>
+					<li><img src="img/email-logo.png" style="background-color: white; border-radius: 4px; margin: 0; height: 40px; margin-right: 10px; position: relative; top: 0.2em;">Email <a href="mailto:rio@rioastamal.net">rio@rioastamal.net</a></li>
+					<li><img src="img/linkedin-logo.png" style="background-color: white; border-radius: 4px; margin: 0; height: 40px; margin-right: 10px; position: relative; top: 0.2em;">LinkedIn <a href="https://linkedin.com/in/rioastamal">linkedin.com/in/rioastamal</a></li>
+					<li><img src="img/github-logo.png"   style="background-color: white; border-radius: 4px; margin: 0; height: 40px; margin-right: 10px; position: relative; top: 0.2em;">Github <a href="https://github.com/rioastamal">github.com/rioastamal</a></li>
+				</ul>
+			</section>
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+	var hostname = window.location.hostname,
+		port = 9191,
+		ws = null,
+		webSocketTimer = null,
+		reconnectInterval = 3;
+
+		function startConnection()
+		{
+			try {
+				ws = new WebSocket('ws://' + hostname + ':' + port);
+
+				ws.onmessage = function(e) {
+					try {
+						var messageObject = JSON.parse(e.data);
+						Reveal.setState(messageObject.state);
+					} catch (e) {
+						// bad json
+					}
+				};
+
+				ws.onclose = function(e) {
+					console.log('WebSocket disconnected, retry connection in ' + reconnectInterval + ' seconds...');
+					ws = null;
+					clearTimeout(webSocketTimer);
+					webSocketTimer = setTimeout(function() {
+						startConnection();
+					}, reconnectInterval * 1000);
+				};
+			} catch (e) {
+				ws = null;
+			}
+		}
+
+		function sendPacket(websocket, data)
+		{
+			if (!websocket) { return; }
+
+			websocket.send(data);
+		}
+
+		window.addEventListener('load', function() {
+			// startConnection();
+
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				controls: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' }
+				]
+			});
+
+			var packetFn = function(op, e) {
+				return {
+					operation: op,
+					state: Reveal.getState(),
+					qs: window.location.search
+				};
+			};
+
+			var totalSlide = Reveal.getTotalSlides();
+
+			Reveal.addKeyBinding(66, function(e) {
+				Reveal.togglePause();
+				sendPacket(ws, JSON.stringify( packetFn('togglepause', e) ));
+			});
+
+			Reveal.addKeyBinding(65, function(e) {
+				Reveal.slide(0, 0, 0);
+				sendPacket(ws, JSON.stringify( packetFn('firstslide', e) ));
+			});
+
+			Reveal.addKeyBinding(90, function(e) {
+				Reveal.slide(totalSlide, 0, 0);
+				sendPacket(ws, JSON.stringify( packetFn('lastslide', e) ));
+			});
+
+			Reveal.addEventListener('slidechanged', function(e) {
+				sendPacket(ws, JSON.stringify( packetFn('slidechanged', e) ));
+			});
+
+			Reveal.addEventListener('fragmentshown', function(e) {
+				sendPacket(ws, JSON.stringify( packetFn('fragmentshown', e) ));
+			});
+
+			Reveal.addEventListener('fragmenthidden', function(e) {
+				sendPacket(ws, JSON.stringify( packetFn('fragmenthidden', e) ));
+			});
+		});
+	</script>
+</body>
+</html>
