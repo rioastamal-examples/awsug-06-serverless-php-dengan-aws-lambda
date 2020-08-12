@@ -86,7 +86,7 @@ if ($dsn) {
         <input type="text" name="dsn" placeholder="mysql:dbname=testdb;host=127.0.0.1" style="width: 300px;" value="<?= $dsn ?>">
         <label>Username / Password</label>
         <input type="text" name="username" placeholder="MySQL Username" value="<?= $username; ?>">
-        <input type="text" name="password" placeholder="MySQL Password" value="<?= $password; ?>">
+        <input type="password" name="password" placeholder="MySQL Password" value="<?= $password; ?>">
 
         <br><br>
         <label>SQL Query</label>
