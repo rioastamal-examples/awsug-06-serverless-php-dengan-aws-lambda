@@ -16,7 +16,7 @@
 	<style>
 		html, body {
 			height: 100%;
-            /*background-color: #262f3d;*/
+			/*background-color: #262f3d;*/
 		}
 		.reveal section img.no-margin {
 			margin: 0;
@@ -64,14 +64,14 @@
 				</div>
 			</section>
 
-            <section>
-                <h3>Materi Presentasi dan Kode Demo</h3>
-                <p>
-                    <ul>
-                        <li><a href="https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/">https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/</a></li>
-                        <li><a href="https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda">https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda</a></li>
-                    </ul>
-            </section>
+			<section>
+				<h3>Materi Presentasi dan Kode Demo</h3>
+				<p>
+					<ul>
+						<li><a href="https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/">https://rioastamal.net/presentasi/2020/08/awsug-06-serverless-php-dengan-aws-lambda/</a></li>
+						<li><a href="https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda">https://github.com/rioastamal-examples/awsug-06-serverless-php-dengan-aws-lambda</a></li>
+					</ul>
+			</section>
 
 
 			<section>
@@ -86,33 +86,33 @@
 				</p>
 			</section>
 
-            <section>
-    			<section data-background="img/dukun-serverless.jpg">
-    				<div style="position: absolute; width: 400px; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
-    					<div style="position: relative;">
-    						<h3 style="text-transform: none;">Apa itu Serverless?</h3>
-    					</div>
-    				</div>
-    			</section>
+			<section>
+				<section data-background="img/dukun-serverless.jpg">
+					<div style="position: absolute; width: 400px; top: 1em; background-color: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+						<div style="position: relative;">
+							<h3 style="text-transform: none;">Apa itu Serverless?</h3>
+						</div>
+					</div>
+				</section>
 
-    			<section>
-    				<h3>Serverless</h3>
-    				<blockquote style="text-align: left; font-size: 34px;">Menjalankan kode aplikasi tanpa perlu memikirkan server (autoscaling dkk).</blockquote>
-    				<blockquote style="text-align: left; font-size: 34px;">Dalam konteks ini adalah Function as a Service (FaaS).</blockquote>
-    			</section>
+				<section>
+					<h3>Serverless</h3>
+					<blockquote style="text-align: left; font-size: 34px;">Menjalankan kode aplikasi tanpa perlu memikirkan server (autoscaling dkk).</blockquote>
+					<blockquote style="text-align: left; font-size: 34px;">Dalam konteks ini adalah Function as a Service (FaaS).</blockquote>
+				</section>
 
-                <section>
-                    <h3>Keuntungan Serverless</h3>
-                    <p>
-                        <span style="display: inline-block; color: cyan" class="fragment fade-left">{Zero Administration}</span>
-                        <span style="display: inline-block" class="fragment fade-left red">{Bayar per Eksekusi}</span>
-                        <span style="display: inline-block; color: yellow" class="fragment fade-up">{Idle = Gratis}</span>
-                        <span style="display: inline-block" class="fragment fade-right">{Auto-Scaling}</span>
-                        <span style="display: inline-block; color: green" class="fragment fade-down">{Microservice sejak awal}</span>
-                        <span style="display: inline-block; color: magenta" class="fragment fade-up">{Faster time to market}</span>
-                    </p>
-                </section>
-            </section>
+				<section>
+					<h3>Keuntungan Serverless</h3>
+					<p>
+						<span style="display: inline-block; color: cyan" class="fragment fade-left">{Zero Administration}</span>
+						<span style="display: inline-block" class="fragment fade-left red">{Bayar per Eksekusi}</span>
+						<span style="display: inline-block; color: yellow" class="fragment fade-up">{Idle = Gratis}</span>
+						<span style="display: inline-block" class="fragment fade-right">{Auto-Scaling}</span>
+						<span style="display: inline-block; color: green" class="fragment fade-down">{Microservice sejak awal}</span>
+						<span style="display: inline-block; color: magenta" class="fragment fade-up">{Faster time to market}</span>
+					</p>
+				</section>
+			</section>
 
 			<section>
 				<h3>AWS Lambda</h3>
@@ -135,9 +135,9 @@
 				<section>
 					<h3>Contoh Kode Python</h3>
 <pre><code class="hljs" data-trim>def my_handler(event, context):
-    return {
-        "message": "Hello World"
-    }</code></pre>
+	return {
+		"message": "Hello World"
+	}</code></pre>
 				</section>
 			</section>
 
@@ -146,7 +146,7 @@
 					<h3>Bagaimana dengan Runtime PHP di AWS Lambda?</h3>
 					<p>
 						<span style="display: block; color: yellow" class="fragment fade-left">Tidak ada :(</span>
-                        <span style="display: block; color: cyan" class="fragment fade-right">#justkidding</span>
+						<span style="display: block; color: cyan" class="fragment fade-right">#justkidding</span>
 					</p>
 				</section>
 
@@ -194,43 +194,131 @@
 
 			<section>
 				<section>
-					<h3>Saatnya Koding</h3>
+					<h3>Saatnya Demo</h3>
 				</section>
 
 				<section>
-                    <h3>Serverless Demo App</h3>
-                    <table style="font-size: 32px;">
-                        <thead>
-                            <tr>
-                                <td>App</td>
-                                <td>Tipe</td>
-                                <td>Lambda Layer</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Terbilang</td>
-                                <td>HTTP API</td>
-                                <td>bref php-73</td>
-                            </tr>
-                            <tr>
-                                <td>SQL Query Browser</td>
-                                <td>Normal Web</td>
-                                <td>bref php-73-fpm</td>
-                            </tr>
-                            <tr>
-                                <td>New File Notification*</td>
-                                <td>S3 Event</td>
-                                <td>bref php-73</td>
-                            </tr>
-                            <tr style="text-decoration: line-through solid red;">
-                                <td>What is My IP*</td>
-                                <td>HTTP API + Normal Web</td>
-                                <td>bref php-73</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p style="font-size: 30px;">*) Hanya menggunakan Bref PHP Runtime tanpa Bref Framework</p>
+					<h3>Serverless Demo App</h3>
+					<table style="font-size: 32px;">
+						<thead>
+							<tr>
+								<td>App</td>
+								<td>Tipe</td>
+								<td>Lambda Layer</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Terbilang</td>
+								<td>HTTP API</td>
+								<td>bref php-73</td>
+							</tr>
+							<tr>
+								<td>SQL Query Browser</td>
+								<td>Normal Web</td>
+								<td>bref php-73-fpm</td>
+							</tr>
+							<tr>
+								<td>New File Notification*</td>
+								<td>S3 Event</td>
+								<td>bref php-73</td>
+							</tr>
+							<tr style="text-decoration: line-through solid red;">
+								<td>What is My IP*</td>
+								<td>HTTP API + Normal Web</td>
+								<td>bref php-73</td>
+							</tr>
+						</tbody>
+					</table>
+					<p style="font-size: 30px;">*) Hanya menggunakan Bref PHP Runtime tanpa Bref Framework</p>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h3>Demo App - Terbilang</h3>
+					<blockquote>Sebuah layanan HTTP API yang akan mengubah angka "123" menjadi bentuk terbilang "seratus dua puluh tiga".</blockquote>
+				</section>
+
+				<section>
+					<h3>Install Bref dan Pustaka Terbilang</h3>
+					<pre><code>$ cat composer.json</code></pre>
+					<pre><code data-trim>
+{
+	"require": {
+		"bref/bref": "^0.5.29",
+		"rioastamal/terbilang": "^1.0"
+	}
+}
+					</code></pre>
+
+					<pre><code data-trim>
+						$ composer install -vvv
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Inisialisasi Bref PHP</h3>
+					<pre><code data-trim>
+						$ ./vendor/bin/bref init
+					</code></pre>
+
+					<pre><code data-trim>
+ What kind of lambda do you want to create? (you will be able to add more functions later by editing `serverless.yml`) [PHP function]:
+  [0] PHP function
+  [1] HTTP application
+  [2] Console application
+ > 0
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>File Handler index.php</h3>
+					<pre><code data-trim>
+&lt;?php declare(strict_types=1);
+
+require __DIR__ . &apos;/vendor/autoload.php&apos;;
+
+use RioAstamal\AngkaTerbilang\Terbilang;
+
+/**
+ * @param array $event
+ * @see https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html for example
+ * @return callable
+ */
+return function ($event)
+{
+	$angka = $event[&apos;queryStringParameters&apos;][&apos;angka&apos;] ?? &apos;0&apos;;
+	$options = isset($event[&apos;queryStringParameters&apos;][&apos;pretty&apos;]) ? JSON_PRETTY_PRINT : 0 ;
+
+	$response = [
+		&apos;angka&apos; =&gt; $angka,
+		&apos;terbilang&apos; =&gt; Terbilang::create()-&gt;t($angka)
+	];
+
+	return json_encode($response, $options);
+};
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Deploy Fungsi ke AWS Lambda</h3>
+					<pre><code data-trim>
+						$ serverless deploy
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Memanggil Terbilang API</h3>
+					<pre><code data-trim>
+$ curl --get -d 'angka=1500,004,300' -d 'pretty' [END_POINT]
+					</code></pre>
+					<pre><code data-trim>
+{
+	"angka": "1500,004,300",
+	"terbilang": "satu milyar lima ratus juta empat ribu tiga ratus"
+}
+					</code></pre>
 				</section>
 			</section>
 
@@ -299,7 +387,7 @@
 				hash: true,
 				controls: true,
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' }
+					{ src: 'plugin/highlight/highlight.js' }
 				]
 			});
 
