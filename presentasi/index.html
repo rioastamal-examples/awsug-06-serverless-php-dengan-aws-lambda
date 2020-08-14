@@ -109,6 +109,7 @@
 						<span style="display: inline-block; color: yellow" class="fragment fade-up">{Idle = Gratis}</span>
 						<span style="display: inline-block" class="fragment fade-right">{Auto-Scaling}</span>
 						<span style="display: inline-block; color: green" class="fragment fade-down">{Microservice sejak awal}</span>
+						<span style="display: inline-block; color: red" class="fragment fade-left">{Event-Driven}</span>
 						<span style="display: inline-block; color: magenta" class="fragment fade-up">{Faster time to market}</span>
 					</p>
 				</section>
@@ -134,10 +135,12 @@
 
 				<section>
 					<h3>Contoh Kode Python</h3>
-<pre><code class="hljs" data-trim>def my_handler(event, context):
-	return {
-		"message": "Hello World"
-	}</code></pre>
+					<pre><code class="hljs" data-trim>
+def my_handler(event, context):
+    return {
+        "message": "Hello World"
+    }
+					</code></pre>
 				</section>
 			</section>
 
@@ -245,10 +248,10 @@
 					<pre><code>$ cat composer.json</code></pre>
 					<pre><code data-trim>
 {
-	"require": {
-		"bref/bref": "^0.5.29",
-		"rioastamal/terbilang": "^1.0"
-	}
+  "require": {
+    "bref/bref": "^0.5.29",
+    "rioastamal/terbilang": "^1.0"
+  }
 }
 					</code></pre>
 
@@ -288,15 +291,15 @@ use RioAstamal\AngkaTerbilang\Terbilang;
  */
 return function ($event)
 {
-	$angka = $event[&apos;queryStringParameters&apos;][&apos;angka&apos;] ?? &apos;0&apos;;
-	$options = isset($event[&apos;queryStringParameters&apos;][&apos;pretty&apos;]) ? JSON_PRETTY_PRINT : 0 ;
+    $angka = $event[&apos;queryStringParameters&apos;][&apos;angka&apos;] ?? &apos;0&apos;;
+    $options = isset($event[&apos;queryStringParameters&apos;][&apos;pretty&apos;]) ? JSON_PRETTY_PRINT : 0 ;
 
-	$response = [
-		&apos;angka&apos; =&gt; $angka,
-		&apos;terbilang&apos; =&gt; Terbilang::create()-&gt;t($angka)
-	];
+    $response = [
+        &apos;angka&apos; =&gt; $angka,
+        &apos;terbilang&apos; =&gt; Terbilang::create()-&gt;t($angka)
+    ];
 
-	return json_encode($response, $options);
+    return json_encode($response, $options);
 };
 					</code></pre>
 				</section>
@@ -315,11 +318,189 @@ $ curl --get -d 'angka=1500,004,300' -d 'pretty' [END_POINT]
 					</code></pre>
 					<pre><code data-trim>
 {
-	"angka": "1500,004,300",
-	"terbilang": "satu milyar lima ratus juta empat ribu tiga ratus"
+    "angka": "1500,004,300",
+    "terbilang": "satu milyar lima ratus juta empat ribu tiga ratus"
 }
 					</code></pre>
 				</section>
+			</section>
+
+			<section>
+				<section>
+					<h3>Demo App - SQL Query Browser</h3>
+					<blockquote>Sebuah web app untuk melakukan query pada MySQL dan menampilkan hasilnya secara langsung.</blockquote>
+				</section>
+
+				<section>
+					<h3>Provision Amazon RDS for MySQL</h3>
+					<pre><code data-trim>
+$ cd terraform/
+$ export AWS_PROFILE=YOUR_PROFILE AWS_DEFAULT_REGION=YOUR_REGION
+$ terraform apply</code></pre>
+
+					<pre><code data-trim>
+Outputs:
+
+database = {
+  "connect" = "mysql -u awsug -h [HOST_NAME] -p serverlessphp"
+  "endpoint" = "[HOST_NAME]:3306"
+  "engine" = "mysql 5.7.26"
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Install Bref</h3>
+					<pre><code>$ cat composer.json</code></pre>
+					<pre><code data-trim>
+{
+  "require": {
+    "bref/bref": "^0.5.29",
+  }
+}
+					</code></pre>
+
+					<pre><code data-trim>
+						$ composer install -vvv
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Inisialisasi Bref PHP</h3>
+					<pre><code data-trim>
+						$ ./vendor/bin/bref init
+					</code></pre>
+
+					<pre><code data-trim>
+ What kind of lambda do you want to create? (you will be able to add more functions later by editing `serverless.yml`) [PHP function]:
+  [0] PHP function
+  [1] HTTP application
+  [2] Console application
+ > 1
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>File Handler index.php</h3>
+					<pre><code data-trim>
+&lt;?php
+
+$dsn = $_POST[&apos;dsn&apos;] ?? &apos;&apos;;
+$username = $_POST[&apos;username&apos;] ?? &apos;root&apos;;
+$password = $_POST[&apos;password&apos;] ?? &apos;&apos;;
+$query = $_POST[&apos;query&apos;] ?? &apos;&apos;;
+$pdo = null;
+
+function exec_query($pdo, $query)
+{
+    if (empty($query)) {
+        return &apos;// Result will be shown here&apos;;
+    }
+
+    $counter = 0;
+
+    try {
+        echo &apos;&lt;table&gt;&apos;;
+        foreach ($pdo-&gt;query($query, PDO::FETCH_ASSOC) as $row) {
+            // --- HEADING --- //
+            if ($counter === 0) {
+                echo &apos;&lt;thead&gt;&lt;tr&gt;&apos;;
+
+                foreach ($row as $key =&gt; $val) {
+                    printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $key);
+                }
+
+                echo &apos;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&apos;;
+            }
+            // --- /HEADING --- //
+
+            echo &apos;&lt;tr&gt;&apos;;
+            foreach ($row as $val) {
+                printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $val);
+            }
+            echo &apos;&lt;/tr&gt;&apos;;
+
+            $counter++;
+        }
+
+        echo &apos;&lt;/tbody&gt;&lt;/table&gt;&apos;;
+    } catch (PDOException $e) {
+        printf(&apos;&lt;pre&gt;Error: %s&lt;/pre&gt;&apos;, $e-&gt;getMessage());
+    }
+}
+
+if ($dsn) {
+    try {
+        $pdo = new PDO($dsn, $username, $password);
+        $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo &apos;Connection failed: &apos; . $e-&gt;getMessage();
+    }
+}
+
+?&gt;&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+    &lt;title&gt;Query Browser on AWS Lambda&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        label {
+            display: block;
+        }
+        div.label-wrapper {
+            width: 300px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        thead td {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+        tr td {
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Query Browser on AWS Lambda&lt;/h2&gt;
+    &lt;form method=&quot;post&quot;&gt;
+        &lt;label&gt;MySQL DSN&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;dsn&quot; placeholder=&quot;mysql:dbname=testdb;host=127.0.0.1&quot; style=&quot;width: 300px;&quot; value=&quot;&lt;?= $dsn ?&gt;&quot;&gt;
+        &lt;label&gt;Username / Password&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;username&quot; placeholder=&quot;MySQL Username&quot; value=&quot;&lt;?= $username; ?&gt;&quot;&gt;
+        &lt;input type=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;MySQL Password&quot; value=&quot;&lt;?= $password; ?&gt;&quot;&gt;
+
+        &lt;br&gt;&lt;br&gt;
+        &lt;label&gt;SQL Query&lt;/label&gt;
+        &lt;textarea style=&quot;width: 99%;height: 200px; font-size: 24px; color: blue;&quot; name=&quot;query&quot;&gt;&lt;?= htmlentities($query) ?&gt;&lt;/textarea&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;RUN&quot;&gt;
+    &lt;/form&gt;
+
+    &lt;hr&gt;
+    &lt;?php exec_query($pdo, $query) ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Deploy Web ke AWS Lambda</h3>
+					<pre><code data-trim>
+						$ serverless deploy
+					</code></pre>
+				</section>
+
+				<section data-background="img/query-browser-demo.png">
+					<div style="position: absolute; width: 400px; height: 100px; right: 0; top: -2em; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+						<div style="position: relative; text-align: center; padding-right: 10px;">
+							<h3 style="text-transform: none; font-size: 36px;">Tampilan SQL Query Browser</h3>
+						</div>
+					</div>
+				</section>
+
 			</section>
 
 			<section>
