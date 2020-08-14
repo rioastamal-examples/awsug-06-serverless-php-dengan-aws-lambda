@@ -30,6 +30,9 @@
 		.reveal h3 {
 			text-transform: none;
 		}
+		.reveal pre code.nohighlight {
+			background-color: #272822;
+		}
 	</style>
 
 	<!-- Printing and PDF exports -->
@@ -116,13 +119,13 @@
 			</section>
 
 			<section>
-				<h3>AWS Lambda</h3>
-				<blockquote>Layanan Serverless dari AWS yang mendukung penggunaan kode NodeJS, Python, Java, Go, .NET Core, Ruby dan <strong style="text-decoration: underline;">Custom Runtime</strong>.</blockquote>
+				<section>
+					<h3>AWS Lambda</h3>
+					<blockquote>Layanan Serverless dari AWS yang mendukung penggunaan kode NodeJS, Python, Java, Go, .NET Core, Ruby dan <strong style="text-decoration: underline;">Custom Runtime</strong>.</blockquote>
 
-				<blockquote>Biaya dihitung per 100ms durasi waktu dan &Sigma; eksekusi.</blockquote>
-			</section>
+					<blockquote>Biaya dihitung per 100ms durasi waktu dan &Sigma; eksekusi.</blockquote>
+				</section>
 
-			<section>
 				<section>
 					<h3>Cara Kerja Lambda</h3>
 					<img src="img/lambda-how-it-works.png">
@@ -135,11 +138,11 @@
 
 				<section>
 					<h3>Contoh Kode Python</h3>
-					<pre><code class="hljs" data-trim>
+					<pre><code data-trim>
 def my_handler(event, context):
-    return {
-        "message": "Hello World"
-    }
+  return {
+    "message": "Hello World"
+  }
 					</code></pre>
 				</section>
 			</section>
@@ -249,8 +252,8 @@ def my_handler(event, context):
 					<pre><code data-trim>
 {
   "require": {
-    "bref/bref": "^0.5.29",
-    "rioastamal/terbilang": "^1.0"
+	"bref/bref": "^0.5.29",
+	"rioastamal/terbilang": "^1.0"
   }
 }
 					</code></pre>
@@ -291,15 +294,15 @@ use RioAstamal\AngkaTerbilang\Terbilang;
  */
 return function ($event)
 {
-    $angka = $event[&apos;queryStringParameters&apos;][&apos;angka&apos;] ?? &apos;0&apos;;
-    $options = isset($event[&apos;queryStringParameters&apos;][&apos;pretty&apos;]) ? JSON_PRETTY_PRINT : 0 ;
+	$angka = $event[&apos;queryStringParameters&apos;][&apos;angka&apos;] ?? &apos;0&apos;;
+	$options = isset($event[&apos;queryStringParameters&apos;][&apos;pretty&apos;]) ? JSON_PRETTY_PRINT : 0 ;
 
-    $response = [
-        &apos;angka&apos; =&gt; $angka,
-        &apos;terbilang&apos; =&gt; Terbilang::create()-&gt;t($angka)
-    ];
+	$response = [
+		&apos;angka&apos; =&gt; $angka,
+		&apos;terbilang&apos; =&gt; Terbilang::create()-&gt;t($angka)
+	];
 
-    return json_encode($response, $options);
+	return json_encode($response, $options);
 };
 					</code></pre>
 				</section>
@@ -318,8 +321,8 @@ $ curl --get -d 'angka=1500,004,300' -d 'pretty' [END_POINT]
 					</code></pre>
 					<pre><code data-trim>
 {
-    "angka": "1500,004,300",
-    "terbilang": "satu milyar lima ratus juta empat ribu tiga ratus"
+	"angka": "1500,004,300",
+	"terbilang": "satu milyar lima ratus juta empat ribu tiga ratus"
 }
 					</code></pre>
 				</section>
@@ -332,7 +335,7 @@ $ curl --get -d 'angka=1500,004,300' -d 'pretty' [END_POINT]
 				</section>
 
 				<section>
-					<h3>Provision Amazon RDS for MySQL</h3>
+					<h3>Provision Amazon RDS MySQL</h3>
 					<pre><code data-trim>
 $ cd terraform/
 $ export AWS_PROFILE=YOUR_PROFILE AWS_DEFAULT_REGION=YOUR_REGION
@@ -355,7 +358,7 @@ database = {
 					<pre><code data-trim>
 {
   "require": {
-    "bref/bref": "^0.5.29",
+	"bref/bref": "^0.5.29",
   }
 }
 					</code></pre>
@@ -371,7 +374,7 @@ database = {
 						$ ./vendor/bin/bref init
 					</code></pre>
 
-					<pre><code data-trim>
+					<pre><code data-trim class="nohighlight">
  What kind of lambda do you want to create? (you will be able to add more functions later by editing `serverless.yml`) [PHP function]:
   [0] PHP function
   [1] HTTP application
@@ -393,94 +396,94 @@ $pdo = null;
 
 function exec_query($pdo, $query)
 {
-    if (empty($query)) {
-        return &apos;// Result will be shown here&apos;;
-    }
+	if (empty($query)) {
+		return &apos;// Result will be shown here&apos;;
+	}
 
-    $counter = 0;
+	$counter = 0;
 
-    try {
-        echo &apos;&lt;table&gt;&apos;;
-        foreach ($pdo-&gt;query($query, PDO::FETCH_ASSOC) as $row) {
-            // --- HEADING --- //
-            if ($counter === 0) {
-                echo &apos;&lt;thead&gt;&lt;tr&gt;&apos;;
+	try {
+		echo &apos;&lt;table&gt;&apos;;
+		foreach ($pdo-&gt;query($query, PDO::FETCH_ASSOC) as $row) {
+			// --- HEADING --- //
+			if ($counter === 0) {
+				echo &apos;&lt;thead&gt;&lt;tr&gt;&apos;;
 
-                foreach ($row as $key =&gt; $val) {
-                    printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $key);
-                }
+				foreach ($row as $key =&gt; $val) {
+					printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $key);
+				}
 
-                echo &apos;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&apos;;
-            }
-            // --- /HEADING --- //
+				echo &apos;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&apos;;
+			}
+			// --- /HEADING --- //
 
-            echo &apos;&lt;tr&gt;&apos;;
-            foreach ($row as $val) {
-                printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $val);
-            }
-            echo &apos;&lt;/tr&gt;&apos;;
+			echo &apos;&lt;tr&gt;&apos;;
+			foreach ($row as $val) {
+				printf(&apos;&lt;td&gt;%s&lt;/td&gt;&apos;, $val);
+			}
+			echo &apos;&lt;/tr&gt;&apos;;
 
-            $counter++;
-        }
+			$counter++;
+		}
 
-        echo &apos;&lt;/tbody&gt;&lt;/table&gt;&apos;;
-    } catch (PDOException $e) {
-        printf(&apos;&lt;pre&gt;Error: %s&lt;/pre&gt;&apos;, $e-&gt;getMessage());
-    }
+		echo &apos;&lt;/tbody&gt;&lt;/table&gt;&apos;;
+	} catch (PDOException $e) {
+		printf(&apos;&lt;pre&gt;Error: %s&lt;/pre&gt;&apos;, $e-&gt;getMessage());
+	}
 }
 
 if ($dsn) {
-    try {
-        $pdo = new PDO($dsn, $username, $password);
-        $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo &apos;Connection failed: &apos; . $e-&gt;getMessage();
-    }
+	try {
+		$pdo = new PDO($dsn, $username, $password);
+		$pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch (PDOException $e) {
+		echo &apos;Connection failed: &apos; . $e-&gt;getMessage();
+	}
 }
 
 ?&gt;&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
-    &lt;title&gt;Query Browser on AWS Lambda&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-        label {
-            display: block;
-        }
-        div.label-wrapper {
-            width: 300px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        thead td {
-            background-color: #f1f1f1;
-            font-weight: bold;
-        }
-        tr td {
-            border: 1px solid #ccc;
-            padding: 4px 8px;
-        }
-    &lt;/style&gt;
+	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+	&lt;title&gt;Query Browser on AWS Lambda&lt;/title&gt;
+	&lt;style type=&quot;text/css&quot;&gt;
+		label {
+			display: block;
+		}
+		div.label-wrapper {
+			width: 300px;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		thead td {
+			background-color: #f1f1f1;
+			font-weight: bold;
+		}
+		tr td {
+			border: 1px solid #ccc;
+			padding: 4px 8px;
+		}
+	&lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h2&gt;Query Browser on AWS Lambda&lt;/h2&gt;
-    &lt;form method=&quot;post&quot;&gt;
-        &lt;label&gt;MySQL DSN&lt;/label&gt;
-        &lt;input type=&quot;text&quot; name=&quot;dsn&quot; placeholder=&quot;mysql:dbname=testdb;host=127.0.0.1&quot; style=&quot;width: 300px;&quot; value=&quot;&lt;?= $dsn ?&gt;&quot;&gt;
-        &lt;label&gt;Username / Password&lt;/label&gt;
-        &lt;input type=&quot;text&quot; name=&quot;username&quot; placeholder=&quot;MySQL Username&quot; value=&quot;&lt;?= $username; ?&gt;&quot;&gt;
-        &lt;input type=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;MySQL Password&quot; value=&quot;&lt;?= $password; ?&gt;&quot;&gt;
+	&lt;h2&gt;Query Browser on AWS Lambda&lt;/h2&gt;
+	&lt;form method=&quot;post&quot;&gt;
+		&lt;label&gt;MySQL DSN&lt;/label&gt;
+		&lt;input type=&quot;text&quot; name=&quot;dsn&quot; placeholder=&quot;mysql:dbname=testdb;host=127.0.0.1&quot; style=&quot;width: 300px;&quot; value=&quot;&lt;?= $dsn ?&gt;&quot;&gt;
+		&lt;label&gt;Username / Password&lt;/label&gt;
+		&lt;input type=&quot;text&quot; name=&quot;username&quot; placeholder=&quot;MySQL Username&quot; value=&quot;&lt;?= $username; ?&gt;&quot;&gt;
+		&lt;input type=&quot;password&quot; name=&quot;password&quot; placeholder=&quot;MySQL Password&quot; value=&quot;&lt;?= $password; ?&gt;&quot;&gt;
 
-        &lt;br&gt;&lt;br&gt;
-        &lt;label&gt;SQL Query&lt;/label&gt;
-        &lt;textarea style=&quot;width: 99%;height: 200px; font-size: 24px; color: blue;&quot; name=&quot;query&quot;&gt;&lt;?= htmlentities($query) ?&gt;&lt;/textarea&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;RUN&quot;&gt;
-    &lt;/form&gt;
+		&lt;br&gt;&lt;br&gt;
+		&lt;label&gt;SQL Query&lt;/label&gt;
+		&lt;textarea style=&quot;width: 99%;height: 200px; font-size: 24px; color: blue;&quot; name=&quot;query&quot;&gt;&lt;?= htmlentities($query) ?&gt;&lt;/textarea&gt;
+		&lt;input type=&quot;submit&quot; value=&quot;RUN&quot;&gt;
+	&lt;/form&gt;
 
-    &lt;hr&gt;
-    &lt;?php exec_query($pdo, $query) ?&gt;
+	&lt;hr&gt;
+	&lt;?php exec_query($pdo, $query) ?&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 					</code></pre>
@@ -493,14 +496,276 @@ if ($dsn) {
 					</code></pre>
 				</section>
 
-				<section data-background="img/query-browser-demo.png">
-					<div style="position: absolute; width: 400px; height: 100px; right: 0; top: -2em; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
-						<div style="position: relative; text-align: center; padding-right: 10px;">
-							<h3 style="text-transform: none; font-size: 36px;">Tampilan SQL Query Browser</h3>
-						</div>
-					</div>
+				<section>
+					<a href="img/query-browser-demo.png"><img src="img/query-browser-demo.png"></a>
 				</section>
 
+			</section>
+
+			<section>
+				<section>
+					<h3>Demo App - S3 New File Notification</h3>
+					<blockquote>Sebuah fungsi Lambda yang akan mengirimkan notifikasi ke email jika ada file baru pada bucket tertentu.</blockquote>
+				</section>
+
+				<section>
+					<h3>Memaket Lambda</h3>
+					<pre><code data-trim>
+                        $ bash build.sh
+					</code></pre>
+
+                    <pre><code class="nohighlight">&gt; Creating zip file into build/function.zip ...
+Generating autoload files
+Generated autoload files
+&lt; Lambda function has been zipped.</code></pre>
+				</section>
+
+				<section>
+					<h3>Deploy Infra dan Lambda</h3>
+					<pre><code data-trim>
+				    	$ bash deploy.sh
+					</code></pre>
+
+					<pre><code data-trim>...
+Outputs:
+
+demo = {
+  "mailhog" = {
+    "ec2_ip" = "18.139.0.199"
+    "mailhog_auth" = "user = teknocerdas | password = orang.cerdas"
+    "ssh_access" = "ssh -i ~/.ssh/teknocerdas.key -o LogLevel=quiet -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@18.139.0.199"
+    "url" = "https://mailhog.teknocerdas.com"
+  }
+  "s3_bucket" = {
+    "butcket_name" = "awsug06-sub-demo"
+    "create_example" = "aws s3 cp ./YOUR_FILE.ext s3://awsug06-sub-demo/"
+  }
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<section>Bootstrap File</section>
+					<pre><code data-trim>
+#!/bin/sh
+# Main entry point for Lambda execution
+
+# Fail on error
+set -e
+
+# Outer main loop for execution.
+# So if there's next event it will get execute it immediately
+while true
+do
+  # All errors to STDOUT so it can be captured to CloudWatch
+  /opt/bin/php "$_HANDLER" 2&gt;&1
+done
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>File src/LambdaRuntime.php</h3>
+                    <pre><code><script type="text/template"><?php
+namespace App;
+
+use App\Handler;
+
+class LambdaRuntime
+{
+  /**
+   * Create object from static calls
+   *
+   * @return App\LambdaRuntime
+   */
+  public static function create()
+  {
+    return new static();
+  }
+
+  /**
+   * Simple abstraction for HTTP GET Lambda invocation
+   *
+   * @param String $url
+   * @return Array
+   */
+  public function fetch($url)
+  {
+    $headers = [
+      'Content-Type: application/json',
+      'User-Agent: BelajarAWS/1.0',
+      'Accept: application/json'
+    ];
+    $options = [
+      'http' => [
+        'method' => 'GET',
+        'header' => implode("\r\n", $headers)
+      ]
+    ];
+    $context = stream_context_create($options);
+    $response = file_get_contents($url, false, $context);
+
+    // Parse special variables called $http_response_header
+    $requestId = null;
+
+    foreach ($http_response_header as $value) {
+      if (preg_match('/Lambda-Runtime-Aws-Request-Id/', $value)) {
+        $requestId = trim(explode('Lambda-Runtime-Aws-Request-Id:', $value)[1]);
+      }
+    }
+
+    return [
+      'body' => json_decode($response, $toArray = true),
+      'request_id' => $requestId
+    ];
+  }
+
+  /**
+   * Simple abstraction for HTTP POST
+   *
+   * @param String $url
+   * @param String $data
+   * @return String
+   */
+  public function post($url, $data)
+  {
+    $headers = [
+      'Content-Type: application/json',
+      'User-Agent: BelajarAWS/1.0',
+      'Content-Length: ' . strlen($data)
+    ];
+    $options = [
+      'http' => [
+        'method' => 'POST',
+        'header' => implode("\r\n", $headers),
+        'content' => $data
+      ]
+    ];
+
+    $context = stream_context_create($options);
+    return file_get_contents($url, false, $context);
+  }
+
+  /**
+   * Lambda main loop
+   */
+  public function main()
+  {
+    // AWS_LAMBDA_RUNTIME_API are automatically set by Lambda
+    $lambdaRuntimeApi = getenv('AWS_LAMBDA_RUNTIME_API');
+    $lambdaBaseUrl = sprintf('http://%s/2018-06-01/runtime/invocation/', $lambdaRuntimeApi);
+    $maxLoop = getenv('MAX_LOOP') ?: 10;
+    $currentLoop = 0;
+    $handler = Handler::create();
+
+    // Inner main loop for execution.
+    // So if there's next event it will get execute it immediately
+    while (true)
+    {
+      if (++$currentLoop > $maxLoop) {
+        break;
+      }
+
+      $nextEvent = $this->fetch($lambdaBaseUrl . 'next');
+      $handlerResponse = $handler->handle($nextEvent['body']);
+
+      $responseUrl = sprintf('%s%s/response', $lambdaBaseUrl, $nextEvent['request_id']);
+      $lambdaResponse = $this->post($responseUrl, $handlerResponse);
+    }
+  }
+}</script></code></pre>
+				</section>
+
+				<section>
+					<h3>File src/Handler.php</h3>
+					<pre><code data-trim><script type="text/php"><?php
+/**
+ * Lambda function to handle notification from S3 event and then
+ * send the info via email (SMTP).
+ */
+namespace App;
+use Tx\Mailer;
+
+class Handler
+{
+  /**
+   * @var array $config - Configuration for the Handler such as
+   *      region, endpoint, etc.
+   */
+  public $config = [];
+
+  /**
+   * Constructor
+   *
+   * @param array $config
+   * @return void
+   */
+  public function __construct(array $config = [])
+  {
+    $default = [
+      'region'      => 'ap-southeast-1',
+      'version'     => 'latest',
+      'email_addr'  => getenv('AWSUG_EMAIL') ? getenv('AWSUG_EMAIL') : 'rio@rioastamal.net',
+      'smtp'        => [
+        'host' => getenv('AWSUG_SMTP_HOST') ? getenv('AWSUG_SMTP_HOST') : 'rio@rioastamal.net',
+        'port' => getenv('AWSUG_SMTP_PORT') ? getenv('AWSUG_SMTP_PORT') : 587,
+        'username' => getenv('AWSUG_SMTP_USER') ? getenv('AWSUG_SMTP_USER') : null,
+        'password' => getenv('AWSUG_SMTP_PASSWD') ? getenv('AWSUG_SMTP_PASSWD') : null,
+      ]
+    ];
+
+    $this->config = array_replace_recursive($default, $config);
+  }
+
+  /**
+   * Create object from static calls
+   *
+   * @param array $config
+   * @return App\Handler
+   */
+  public static function create(array $config = [])
+  {
+    return new static($config);
+  }
+
+  /**
+   * Handler function which return a response and will be send back to Lambda
+   *
+   * @param array $event Lambda Event
+   * @return String
+   */
+  public function handle($event)
+  {
+    $eventTime = $event['Records'][0]['eventTime'];
+    $body = sprintf('<h3>Here is the the event info.</h3><pre>%s</pre>', json_encode($event, JSON_PRETTY_PRINT));
+
+    // Send email notification for new file
+    $mailer = (new Mailer())
+        ->setServer($this->config['smtp']['host'], $this->config['smtp']['port'])
+        ->setFrom('Rio Astamal', 'rio@rioastamal.net')
+        ->addTo('AWS UG Surabaya', $this->config['email_addr'])
+        ->setSubject( sprintf('New file has been uploaded at %s', $eventTime) )
+        ->setBody($body)
+        ->send();
+
+    $response = [
+        'email_status' => (bool)$mailer,
+        'requestId' => $event['Records'][0]['responseElements']['x-amz-request-id']
+    ];
+    return json_encode($response);
+  }
+}
+</script>
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Test Email Notification</h3>
+					<pre><code class="nohighlight">$ aws s3 cp /some/file.ext s3://[BUCKET_NAME]/</code></pre>
+				</section>
+			</section>
+
+			<section>
+				<a href="img/file-notification-demo.png"><img src="img/file-notification-demo.png"></a>
 			</section>
 
 			<section>
