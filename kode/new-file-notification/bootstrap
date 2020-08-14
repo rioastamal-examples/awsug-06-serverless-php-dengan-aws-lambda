@@ -1,0 +1,13 @@
+#!/bin/sh
+# Main entry point for Lambda execution
+
+# Fail on error
+set -e
+
+# Outer main loop for execution.
+# So if there's next event it will get execute it immediately
+while true
+do
+  # All errors to STDOUT so it can be captured to CloudWatch
+  /opt/bin/php "$_HANDLER" 2>&1
+done
